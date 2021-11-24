@@ -1,0 +1,17 @@
+version: '2'
+volumes:
+  g2-data: {}
+services:
+  #fbcp:
+  # image: balenablocks/fbcp
+  #  privileged: true
+  g2tester:
+    build: ./g2tester
+    restart: always
+    volumes:
+      - 'g2-data:/data'
+    privileged: true
+    labels:
+      io.balena.features.supervisor-api: 1
+    ports:
+      - '80:5000'
