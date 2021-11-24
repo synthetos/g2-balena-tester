@@ -3,7 +3,7 @@
 # and about balena base images here: https://www.balena.io/docs/reference/base-images/base-images/
 FROM balenalib/%%BALENA_MACHINE_NAME%%-python:latest-buster-build
 
-RUN install_packages build-essential gcc
+RUN install_packages build-essential gcc i2c-tools
 # use `install_packages` if you need to install dependencies,
 # for instance if you need git, just uncomment the line below.
 # RUN install_packages git
@@ -18,6 +18,9 @@ RUN pip3 install -r requirements.txt
 
 # Enable udevd so that plugged dynamic hardware devices show up in our container.
 ENV UDEV=1
+
+#This copies our custom device tree
+COPY rpi-display.dtbo /mnt/boot/
 
 # This will copy all files in our root to the working directory in the container
 COPY *.py /usr/src/app/
